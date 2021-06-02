@@ -11,4 +11,4 @@ cmake \
         -DWITH_TESTS=ON \
         ..
 make
-
+make install
