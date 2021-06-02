@@ -5,45 +5,45 @@ MAINTAINER Rick Nitsche <rick@phas.ubc.ca>
 
 # Install any needed packages to run cmake with full CHIME build options
 RUN apt-get update && \
-    apt-get install -y software-properties-common=0.96.* && \
+    apt-get install -y software-properties-common && \
     add-apt-repository ppa:deadsnakes/ppa && \
     apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y python3.7=3.7.* \
-                       python3-setuptools=39.0.* \
-                       python3-pip=9.0.* \
+    apt-get install -y python3.7 \
+                       python3-setuptools \
+                       python3-pip \
                        python3.7-distutils \
-                       python3.7-dev=3.7.* \
-                       build-essential=12.* \
-                       git=1:2.17.* \
-                       coreutils=8.* \
-                       ccache=3.4.* \
-                       pkg-config=0.29.* \
-                       gcc=4:7.4.* \
-                       gdb=8.* \
-                       cmake=3.10.* \
-                       clang-9=1:9-* \
-                       clang-format-8=1:8-* \
-                       dpdk=17.11.* \
-                       dpdk-dev=17.11.* \
-                       rocm-opencl-dev=3.* \
-                       rocm-opencl=3.* \
-                       libhdf5-serial-dev=1.10.* \
-                       libboost-test-dev=1.65.* \
-                       libevent-dev=2.1.* \
-                       libssl-dev=1.1.* \
-                       wget=1.19.* \
+                       python3.7-dev \
+                       build-essential \
+                       git \
+                       coreutils \
+                       ccache \
+                       pkg-config \
+                       gcc \
+                       gdb \
+                       cmake \
+                       clang-9 \
+                       clang-format-8 \
+                       dpdk \
+                       dpdk-dev \
+                       rocm-opencl-dev \
+                       rocm-opencl \
+                       libhdf5-serial-dev \
+                       libboost-test-dev \
+                       libevent-dev \
+                       libssl-dev \
+                       wget \
                        && \
     apt-get clean && apt-get autoclean
 
-RUN python3.7 -m pip install --upgrade pip==20.2.2 && \
-    python3.7 -m pip install --upgrade --force-reinstall setuptools==49.6.0 && \
-    python3.7 -m pip install --upgrade wheel==0.35.1 && \
-    python3.7 -m pip install --no-cache-dir numpy==1.19.1 && \
-    python3.7 -m pip install --no-cache-dir pkgconfig==1.5.1 && \
-    python3.7 -m pip install --no-cache-dir --upgrade cython==0.29.21 && \
-    python3.7 -m pip install --no-cache-dir black==19.10b0 &&\
-    python3.7 -m pip install --no-cache-dir cmake_format==0.6.13
+RUN python3.7 -m pip install --upgrade pip && \
+    python3.7 -m pip install --upgrade --force-reinstall setuptools && \
+    python3.7 -m pip install --upgrade wheel && \
+    python3.7 -m pip install --no-cache-dir numpy && \
+    python3.7 -m pip install --no-cache-dir pkgconfig && \
+    python3.7 -m pip install --no-cache-dir --upgrade cython && \
+    python3.7 -m pip install --no-cache-dir black && \
+    python3.7 -m pip install --no-cache-dir cmake_format
 
 RUN mkdir -p /code/build
 WORKDIR /code/build
@@ -76,57 +76,58 @@ RUN git clone https://github.com/kiyo-masui/bitshuffle.git bitshuffle &&\
 
 # Install OpenBLAS and clone Blaze for the eigenvalue processes
 RUN apt-get update && \
-    apt-get -y install libopenblas-dev=0.2.* \
-                       liblapack-dev=3.7.* \
-                       liblapacke-dev=3.7.* \
+    apt-get -y install libopenblas-dev=0.2.20+ds-4 \
+                       liblapack-dev=3.7.1-4ubuntu1 \
+                       liblapacke-dev=3.7.1-4ubuntu1 \
                        && \
     apt-get clean && apt-get autoclean && \
     git clone https://bitbucket.org/blaze-lib/blaze.git blaze && \
     cd blaze && git checkout v3.4 && cd ..
 
 # Install kotekan python dependencies
-RUN python3.7 -m pip install msgpack==1.0.0 \
-                             click==7.1.2 \
-                             future==0.18.2 \
-                             requests==2.24.0 \
-                             pyyaml==3.12 \
-                             tabulate==0.8.7 \
-                             pytest==6.0.1 \
-                             pytest-xdist==2.1.0 \
-                             pytest-cpp==1.4.0 \
-                             pytest-localserver==0.5.0 \
-                             flask==1.1.2 \
-                             pytest-timeout==1.4.2 \
-                             posix_ipc==1.0.4 \
+RUN python3.7 -m pip install msgpack \
+                             click \
+                             future \
+                             requests \
+                             pyyaml \
+                             tabulate \
+                             pytest \
+                             pytest-xdist \
+                             pytest-cpp \
+                             pytest-localserver \
+                             flask \
+                             pytest-timeout \
+                             posix_ipc \
                              && \
     apt-get update && \
-    apt-get install -y mysql-client=5.7.* \
-        libmysqlclient-dev=5.7.* && \
+    apt-get install -y mysql-client \
+        libmysqlclient-dev && \
     apt-get clean && apt-get autoclean && \
     python3.7 -m pip install git+https://github.com/chime-experiment/comet.git
 
 # Install redis for comet tests
 RUN apt-get update && \
-    apt-get install -y redis=5:4.0.* && \
+    apt-get install -y redis && \
     apt-get clean && apt-get autoclean
 
 # Install documentation dependencies
 RUN apt-get update && \
-    apt-get -y install doxygen=1.8.* \
-                       graphviz=2.40.* \
-                       python-sphinx=1.6.* \
-                       default-jre=2:1.* \
+    apt-get -y install doxygen \
+                       graphviz \
+                       python-sphinx \
+                       default-jre \
                        && \
     apt-get clean && apt-get autoclean && \
-    python3.7 -m pip install --no-cache-dir breathe==4.20.* \
-                                            sphinx_rtd_theme==0.5.* \
-                                            sphinxcontrib-plantuml==0.* \
+    python3.7 -m pip install --no-cache-dir breathe \
+                                            sphinx_rtd_theme \
+                                            sphinxcontrib-plantuml \
                                             && \
     wget https://phoenixnap.dl.sourceforge.net/project/plantuml/plantuml.jar -P plantuml
 
 # Uncomment this to check what version got installed
 # RUN python3.7 -m pip show <package>
 # RUN apt-cache policy <package>
+
 
 # Clean any unwanted caches
 RUN apt-get clean && apt-get autoclean
