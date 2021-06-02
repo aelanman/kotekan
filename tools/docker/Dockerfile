@@ -142,5 +142,8 @@ ENV CCACHE_MAXSIZE 1G
 # Set the plugin path so kotekan can find bitshuffle
 ENV HDF5_PLUGIN_PATH /usr/local/hdf5/lib/plugin
 
+# Pull the kotekan repository to prepare for installation.
+RUN git clone --single-branch --branch dockerfile_update https://github.com/kotekan/kotekan.git
+
 # Do nothing when the container launches
 CMD ["/bin/bash"]
