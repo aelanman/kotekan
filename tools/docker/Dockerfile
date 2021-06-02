@@ -143,7 +143,7 @@ ENV CCACHE_MAXSIZE 1G
 ENV HDF5_PLUGIN_PATH /usr/local/hdf5/lib/plugin
 
 # Pull the kotekan repository to prepare for installation.
-RUN git clone --single-branch --branch dockerfile_update https://github.com/kotekan/kotekan.git
+RUN git clone --single-branch --branch dockerfile_update https://github.com/aelanman/kotekan.git
 
 # Do nothing when the container launches
 CMD ["/bin/bash"]
